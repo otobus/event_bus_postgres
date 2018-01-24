@@ -1,6 +1,6 @@
 defmodule EventBus.Postgres.Supervisor.TTL do
   @moduledoc """
-  A supervisor for EventBucket
+  A supervisor for Event TTL
   """
 
   use Supervisor

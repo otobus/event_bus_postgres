@@ -1,6 +1,6 @@
 defmodule EventBus.Postgres.Worker.Bucket do
   @moduledoc """
-  Worker for EventBucket
+  Worker for Event Bucket
   """
 
   use GenServer

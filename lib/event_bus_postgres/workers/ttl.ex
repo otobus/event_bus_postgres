@@ -1,6 +1,6 @@
 defmodule EventBus.Postgres.Worker.TTL do
   @moduledoc """
-  Worker for EventBucket
+  Worker for Event TTL
   """
 
   use GenServer
