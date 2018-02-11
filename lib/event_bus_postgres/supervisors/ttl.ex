@@ -7,8 +7,7 @@ defmodule EventBus.Postgres.Supervisor.TTL do
   alias EventBus.Postgres.Worker.TTL, as: TTLWorker
 
   @doc false
-  def start_link,
-    do: Supervisor.start_link(__MODULE__, [], name: __MODULE__)
+  def start_link, do: Supervisor.start_link(__MODULE__, [], name: __MODULE__)
 
   @doc false
   def init([]) do

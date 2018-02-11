@@ -9,8 +9,7 @@ defmodule EventBus.Postgres.Worker.TTL do
   ## Callbacks
 
   @doc false
-  def start_link,
-    do: GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  def start_link, do: GenServer.start_link(__MODULE__, [], name: __MODULE__)
 
   @doc false
   def init(_opts) do

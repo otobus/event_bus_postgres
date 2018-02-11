@@ -12,9 +12,30 @@ defmodule EventBus.Postgres.Config do
     |> to_bool()
   end
 
-  def persist_in_ms do
+  def pool_size do
     @app
-    |> Application.get_env(:persist_in_ms)
+    |> Application.get_env(:pool_size)
+    |> get_env_var()
+    |> to_int()
+  end
+
+  def buffer_size do
+    @app
+    |> Application.get_env(:buffer_size)
+    |> get_env_var()
+    |> to_int()
+  end
+
+  def min_demand do
+    @app
+    |> Application.get_env(:min_demand)
+    |> get_env_var()
+    |> to_int()
+  end
+
+  def max_demand do
+    @app
+    |> Application.get_env(:max_demand)
     |> get_env_var()
     |> to_int()
   end
@@ -43,26 +64,24 @@ defmodule EventBus.Postgres.Config do
 
   defp get_env_var({:system, name, default}),
     do: System.get_env(name) || default
-  defp get_env_var(item),
-    do: item
 
-  defp to_list(val) when is_list(val),
-    do: val
-  defp to_list(val),
-    do: String.split(val, ";")
+  defp get_env_var(item), do: item
 
-  defp to_int(val \\ 0),
-    do: String.to_integer("#{val}")
+  defp to_list(val) when is_list(val), do: val
+  defp to_list(val), do: String.split(val, ";")
 
-  defp to_microseconds(val),
-    do: val * 1_000
+  defp to_int(val \\ 0), do: String.to_integer("#{val}")
+
+  defp to_microseconds(val), do: val * 1_000
 
   defp to_bool(val) do
     case "#{val}" do
       "1" ->
         true
+
       "true" ->
         true
+
       _ ->
         false
     end

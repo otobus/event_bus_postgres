@@ -9,13 +9,13 @@ defmodule EventBus.Postgres.Model.Event do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "events" do
-    field :data, :binary
-    field :initialized_at, :integer
-    field :occurred_at, :integer
-    field :source, :string
-    field :topic, :string
-    field :transaction_id, Ecto.UUID
-    field :ttl, :integer
+    field(:data, :binary)
+    field(:initialized_at, :integer)
+    field(:occurred_at, :integer)
+    field(:source, :string)
+    field(:topic, :string)
+    field(:transaction_id, Ecto.UUID)
+    field(:ttl, :integer)
   end
 
   @doc false

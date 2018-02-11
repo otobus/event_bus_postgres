@@ -28,17 +28,20 @@ In your config.exs (or dev.exs, test.exs, prod.exs);
 
 ```elixir
 config :event_bus_postgres,
-  enabled: {:system, "EB_POSTGRES_ENABLED", "true"},
-  persist_in_ms: {:system, "EB_POSTGRES_PERSIST_IN_MS", "100"},
-  topics: {:system, "EB_POSTGRES_TOPICS", ".*"}, # seperator is ';'
-  default_ttl: {:system, "EB_POSTGRES_DEFAULT_TTL", "900000"},
-  deletion_period: {:system, "EB_POSTGRES_DELETION_PERIOD", "600000"}
+  enabled: {:system, "EB_PG_ENABLED", "true"},
+  min_demand: {:system, "EB_PG_MIN_DEMAND", "75"}, # GenStage consumer
+  max_demand: {:system, "EB_PG_MAX_DEMAND", "100"}, # GenStage consumer
+  pool_size: {:system, "EB_PG_POOL_SIZE", "1"}, # GenStage consumer
+  buffer_size: {:system, "EB_PG_BUFFER_SIZE", "200"}, # GenStage producerr_consumer
+  topics: {:system, "EB_PG_TOPICS", ".*"},
+  default_ttl_in_ms: {:system, "EB_PG_DEFAULT_TTL_IN_MS", "900000"},
+  deletion_period_in_ms: {:system, "EB_PG_DELETION_PERIOD_IN_MS", "600000"}
 
 # DB config
 config :event_bus_postgres, EventBus.Postgres.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "2"),
+  url: System.get_env("EB_PG_DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("EB_PG_POOL_SIZE") || "1"),
   ssl: true
 
 ```
@@ -56,6 +59,45 @@ Module docs can be found at [https://hexdocs.pm/event_bus_postgres](https://hexd
 2. Make your improvements and write your tests(make sure you covered all the cases).
 
 3. Make a pull request.
+
+## Demo
+
+Let's create 100k rows of events in Postgres with 1 worker
+
+```shell
+export EB_PG_ENABLED=true;
+export EB_PG_MIN_DEMAND=75;
+export EB_PG_MAX_DEMAND=100;
+export EB_PG_POOL_SIZE=1; # 1 worker/consumer
+export EB_PG_BUFFER_SIZE=200;
+export EB_PG_TOPICS=".*";
+export EB_PG_DEFAULT_TTL="900000";
+export EB_PG_DELETION_PERIOD="600000";
+iex -S mix;
+```
+
+In the app console:
+
+```elixir
+use EventBus.EventSource
+topic = :fake_event_initialized
+error_topic = :fake_event_erred
+EventBus.register_topic(topic)
+EventBus.register_topic(error_topic)
+source = "console"
+ttl = 600_000_000
+
+transaction_id = UUID.uuid4()
+
+result = :timer.tc(fn ->
+  Enum.each(1..100_000, fn _ ->
+    params = %{id: UUID.uuid4(), topic: topic, transaction_id: transaction_id, ttl: ttl, source: source, error_topic: error_topic}
+    EventSource.notify(params) do
+      "this is a fake event"
+    end
+  end)
+end)
+```
 
 ## License
 

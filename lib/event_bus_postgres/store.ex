@@ -9,8 +9,13 @@ defmodule EventBus.Postgres.Store do
   @doc """
   Fetch all events with pagination
   """
-  def all(%{page: page, per_page: per_page, since: since} \\
-    %{page: 1, per_page: 20, since: 0}) do
+  def all(
+        %{page: page, per_page: per_page, since: since} \\ %{
+          page: 1,
+          per_page: 20,
+          since: 0
+        }
+      ) do
     query =
       from(
         e in Event,
@@ -31,8 +36,7 @@ defmodule EventBus.Postgres.Store do
     query =
       from(
         e in Event,
-        where:
-          e.occurred_at >= ^since
+        where: e.occurred_at >= ^since
       )
 
     Repo.aggregate(query, :count, :topic)
@@ -45,8 +49,7 @@ defmodule EventBus.Postgres.Store do
     query =
       from(
         e in Event,
-        where:
-          e.occurred_at >= ^since
+        where: e.occurred_at >= ^since
       )
 
     Repo.aggregate(query, :count, :id)
@@ -55,15 +58,23 @@ defmodule EventBus.Postgres.Store do
   @doc """
   Fetch all events with pagination
   """
-  def find_all_by_transaction_id(%{page: page, per_page: per_page, since: since,
-    transaction_id: transaction_id} \\
-    %{page: 1, per_page: 20, since: 0, transaction_id: nil}) do
+  def find_all_by_transaction_id(
+        %{
+          page: page,
+          per_page: per_page,
+          since: since,
+          transaction_id: transaction_id
+        } \\ %{
+          page: 1,
+          per_page: 20,
+          since: 0,
+          transaction_id: nil
+        }
+      ) do
     query =
       from(
         e in Event,
-        where:
-          e.transaction_id == ^transaction_id and
-          e.occurred_at >= ^since,
+        where: e.transaction_id == ^transaction_id and e.occurred_at >= ^since,
         offset: ^((page - 1) * per_page),
         limit: ^per_page
       )
@@ -78,7 +89,7 @@ defmodule EventBus.Postgres.Store do
   """
   def find(id) do
     case Repo.get(id, Event) do
-      nil   -> nil
+      nil -> nil
       event -> Event.to_eb_event(event)
     end
   end
@@ -93,8 +104,8 @@ defmodule EventBus.Postgres.Store do
   @doc """
   Batch insert
   """
-  def batch_insert([]),
-    do: :ok
+  def batch_insert([]), do: :ok
+
   def batch_insert(events),
     do: Repo.insert_all(Event, events, on_conflict: :nothing)
 
@@ -102,7 +113,8 @@ defmodule EventBus.Postgres.Store do
   Delete expired events
   """
   def delete_expired do
-    now   = System.os_time(:micro_seconds)
+    now = System.os_time(:micro_seconds)
+
     query =
       from(
         e in Event,
