@@ -32,7 +32,7 @@ config :event_bus_postgres,
   min_demand: {:system, "EB_PG_MIN_DEMAND", "75"}, # GenStage consumer
   max_demand: {:system, "EB_PG_MAX_DEMAND", "100"}, # GenStage consumer
   pool_size: {:system, "EB_PG_POOL_SIZE", "1"}, # GenStage consumer
-  buffer_size: {:system, "EB_PG_BUFFER_SIZE", "200"}, # GenStage producerr_consumer
+  buffer_size: {:system, "EB_PG_BUFFER_SIZE", "200"}, # GenStage producer_consumer
   topics: {:system, "EB_PG_TOPICS", ".*"},
   default_ttl_in_ms: {:system, "EB_PG_DEFAULT_TTL_IN_MS", "900000"},
   deletion_period_in_ms: {:system, "EB_PG_DELETION_PERIOD_IN_MS", "600000"}
