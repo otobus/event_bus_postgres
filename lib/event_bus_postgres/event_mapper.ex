@@ -28,7 +28,7 @@ defmodule EventBus.Postgres.EventMapper do
     events =
       Enum.map(event_shadows, fn {topic, id} ->
         event = EventBus.fetch_event({topic, id})
-        EventBus.mark_as_completed({__MODULE__, topic, id})
+        EventBus.mark_as_completed({EventBus.Postgres, topic, id})
         Event.from_eb_event(event)
       end)
 
