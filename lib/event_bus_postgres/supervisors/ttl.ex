@@ -1,7 +1,5 @@
 defmodule EventBus.Postgres.Supervisor.TTL do
-  @moduledoc """
-  A supervisor for Event TTL
-  """
+  @moduledoc false
 
   use Supervisor
   alias EventBus.Postgres.Worker.TTL, as: TTLWorker

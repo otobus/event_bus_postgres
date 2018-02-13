@@ -1,6 +1,6 @@
 defmodule EventBus.Postgres.Store do
   @moduledoc """
-  Basic db functions for EventBus.Postgres
+  Basic db actions
   """
 
   import Ecto.Query

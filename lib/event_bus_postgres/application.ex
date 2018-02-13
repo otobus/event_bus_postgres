@@ -1,12 +1,6 @@
 defmodule EventBus.Postgres.Application do
-  @moduledoc """
-  The EventBus.Postgres Application Service.
+  @moduledoc false
 
-  The event_bus_postgres system business domain lives in this application.
-
-  Exposes API to clients such as the `EventhubWeb` application
-  for use in channels, controllers, and elsewhere.
-  """
   use Application
   alias EventBus.Postgres
   alias EventBus.Postgres.{Config, Repo, Queue, EventMapper, Bucket}

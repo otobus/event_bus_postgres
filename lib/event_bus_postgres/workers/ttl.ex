@@ -1,7 +1,5 @@
 defmodule EventBus.Postgres.Worker.TTL do
-  @moduledoc """
-  Worker for Event TTL
-  """
+  @moduledoc false
 
   use GenServer
   alias EventBus.Postgres.{Config, Store}

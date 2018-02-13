@@ -1,6 +1,6 @@
 defmodule EventBus.Postgres.Config do
   @moduledoc """
-  Config reader for EventBus.Postgres
+  Config reader
   """
 
   @app :event_bus_postgres

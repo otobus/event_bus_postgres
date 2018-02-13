@@ -1,6 +1,6 @@
 defmodule EventBus.Postgres do
   @moduledoc """
-  Documentation for EventBus.Postgres.
+  Postgres plugin for EventBus
   """
 
   alias EventBus.Postgres.Queue

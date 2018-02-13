@@ -1,6 +1,6 @@
 defmodule EventBus.Postgres.Bucket do
   @moduledoc """
-  Postgres event persist worker
+  Event persistence worker
   """
 
   use GenStage
