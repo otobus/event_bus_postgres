@@ -10,7 +10,7 @@ by adding `event_bus_postgres` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:event_bus_postgres, "~> 0.2.1"}
+    {:event_bus_postgres, "~> 0.2.2"}
   ]
 end
 ```
@@ -18,6 +18,8 @@ end
 On the command line:
 
 ```shell
+mix deps.get
+cp _deps/event_bus_postgres/priv/repo/migrations/* priv/repo/migrations/
 mix ecto.create -r EventBus.Postgres.Repo
 mix ecto.migrate -r EventBus.Postgres.Repo
 ```
