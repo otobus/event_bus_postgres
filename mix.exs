@@ -26,7 +26,7 @@ defmodule EventBus.Postgres.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:event_bus, ">= 1.0.0"},
+      {:event_bus, ">= 1.1.0"},
       {:ecto, "~> 2.1"},
       {:postgrex, ">= 0.0.0"},
       {:uuid, "~> 1.1", only: [:dev, :test]},
