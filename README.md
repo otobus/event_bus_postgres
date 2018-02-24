@@ -10,7 +10,7 @@ by adding `event_bus_postgres` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:event_bus_postgres, "~> 0.2.2"}
+    {:event_bus_postgres, "~> 0.2.3"}
   ]
 end
 ```
