@@ -4,7 +4,7 @@ defmodule EventBus.Postgres.Mixfile do
   def project do
     [
       app: :event_bus_postgres,
-      version: "0.2.3",
+      version: "0.2.4",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -63,7 +63,7 @@ defmodule EventBus.Postgres.Mixfile do
   defp package do
     [
       name: :event_bus_postgres,
-      files: ["lib", "mix.exs", "README.md"],
+      files: ["lib", "mix.exs", "priv", "README.md"],
       maintainers: ["Mustafa Turan"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/mustafaturan/event_bus_postgres"}
