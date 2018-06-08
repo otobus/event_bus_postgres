@@ -4,7 +4,7 @@ defmodule EventBus.Postgres.Mixfile do
   def project do
     [
       app: :event_bus_postgres,
-      version: "0.2.4",
+      version: "0.2.5",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -26,7 +26,7 @@ defmodule EventBus.Postgres.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:event_bus, ">= 1.2.0"},
+      {:event_bus, ">= 1.3.0"},
       {:ecto, "~> 2.1"},
       {:postgrex, ">= 0.0.0"},
       {:uuid, "~> 1.1", only: [:dev, :test]},
