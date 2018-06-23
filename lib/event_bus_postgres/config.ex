@@ -12,6 +12,13 @@ defmodule EventBus.Postgres.Config do
     |> to_bool()
   end
 
+  def auto_delete_with_ttl? do
+    @app
+    |> Application.get_env(:auto_delete_with_ttl, true)
+    |> get_env_var()
+    |> to_bool()
+  end
+
   def pool_size do
     @app
     |> Application.get_env(:pool_size)
@@ -80,6 +87,9 @@ defmodule EventBus.Postgres.Config do
         true
 
       "true" ->
+        true
+
+      true ->
         true
 
       _ ->

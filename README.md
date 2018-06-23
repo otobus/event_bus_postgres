@@ -31,6 +31,7 @@ In your config.exs (or dev.exs, test.exs, prod.exs);
 ```elixir
 config :event_bus_postgres,
   enabled: {:system, "EB_PG_ENABLED", "true"},
+  auto_delete_with_ttl: {:system, "EB_PG_AUTO_DELETE_WITH_TTL", "true"},
   min_demand: {:system, "EB_PG_MIN_DEMAND", "75"}, # GenStage consumer
   max_demand: {:system, "EB_PG_MAX_DEMAND", "100"}, # GenStage consumer
   pool_size: {:system, "EB_PG_POOL_SIZE", "1"}, # GenStage consumer

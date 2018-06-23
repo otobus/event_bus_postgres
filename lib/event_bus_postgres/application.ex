@@ -26,10 +26,18 @@ defmodule EventBus.Postgres.Application do
 
     [
       supervisor(Repo, [], id: make_ref(), restart: :permanent),
-      supervisor(TTLSupervisor, [], id: make_ref(), restart: :permanent),
       worker(Queue, [], id: make_ref(), restart: :permanent),
       worker(EventMapper, [], id: make_ref(), restart: :permanent)
-    ] ++ bucket_workers()
+    ] ++ bucket_workers() ++ auto_deletion_workers()
+  end
+
+  defp auto_deletion_workers do
+    if Config.auto_delete_with_ttl?() do
+      import Supervisor.Spec, warn: false
+      [ supervisor(TTLSupervisor, [], id: make_ref(), restart: :permanent) ]
+    else
+      []
+    end
   end
 
   defp bucket_workers do

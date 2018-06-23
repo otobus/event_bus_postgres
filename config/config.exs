@@ -4,6 +4,7 @@ config :event_bus_postgres, ecto_repos: [EventBus.Postgres.Repo]
 
 config :event_bus_postgres,
   enabled: {:system, "EB_PG_ENABLED", "true"},
+  auto_delete_with_ttl: {:system, "EB_PG_AUTO_DELETE_WITH_TTL", "true"},
   min_demand: {:system, "EB_PG_MIN_DEMAND", "75"},
   max_demand: {:system, "EB_PG_MAX_DEMAND", "100"},
   pool_size: {:system, "EB_PG_POOL_SIZE", "1"},
