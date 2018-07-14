@@ -32,7 +32,7 @@ defmodule EventBus.Postgres.Mixfile do
       {:uuid, "~> 1.1", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:credo, "~> 0.8.10", only: :dev},
-      {:gen_stage, "~> 0.13.1"}
+      {:gen_stage, "~> 0.14.0"}
     ]
   end
 
