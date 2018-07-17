@@ -81,24 +81,39 @@ iex -S mix;
 In the app console:
 
 ```elixir
-use EventBus.EventSource
-topic = :fake_event_initialized
-error_topic = :fake_event_erred
-EventBus.register_topic(topic)
-EventBus.register_topic(error_topic)
-source = "console"
-ttl = 600_000_000
+defmodule FakeSource do
+  @moduledoc """
+  Fake event generator
+  """
 
-transaction_id = UUID.uuid4()
+  use EventBus.EventSource
 
-result = :timer.tc(fn ->
-  Enum.each(1..100_000, fn _ ->
-    params = %{id: UUID.uuid4(), topic: topic, transaction_id: transaction_id, ttl: ttl, source: source, error_topic: error_topic}
-    EventSource.notify(params) do
-      "this is a fake event"
-    end
-  end)
-end)
+  @doc """
+  Generates 100_000 events
+  """
+  def generate_events do
+    topic = :fake_event_initialized
+    error_topic = :fake_event_erred
+    EventBus.register_topic(topic)
+    EventBus.register_topic(error_topic)
+    source = "console"
+    ttl = 600_000_000
+
+    transaction_id = UUID.uuid4()
+
+    :timer.tc(fn ->
+      Enum.each(1..100_000, fn _ ->
+        params = %{id: UUID.uuid4(), topic: topic, transaction_id: transaction_id, ttl: ttl, source: source, error_topic: error_topic}
+        EventSource.notify(params) do
+          "this is a fake event"
+        end
+      end)
+    end)
+  end
+end
+
+# All generated events will be saved to postgres automatically
+{time_spent, :ok} = FakeSource.generate_events()
 ```
 
 ## License
