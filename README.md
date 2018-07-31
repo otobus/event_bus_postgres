@@ -48,6 +48,42 @@ config :event_bus_postgres, EventBus.Postgres.Repo,
   ssl: true
 ```
 
+## How does it work?
+
+```markdown
++-----+
+|     |                                         GEN STAGE
+|     |        EVENTBUS      +------------------------------------------+
+|     |        CONSUMER      |                   +---+                  |
+|     |        +-----+       |                   |   |                  |
+|     |        |     |       |                   |   |          +---+   |
+|     |        |  E  |       |                   |   |          |   |   |
+|     |        |  v  |       |                   |   |          |   |   |
+|     |        |  e  |       |                   |   |          |   |   |
+|  E  |        |  n  |       |                   | E |          |   |   |
+|  l  |        |  t  |       |  +-------+        | v |          |   |   |
+|  i  | topic  |  B  |  topic   |       |        | e |          |   |
+|  x  |   +    |  u  |    +     |   Q   |        | n |          | B |       +--+
+|  i  |event_id|  s  | event_id |   u   |   ask  | t |    ask   | u |       |  |
+|  r  |------->|  .  |--------->|   e   |<-------|   | <--------| c | BATCH |  |
+|     |        |  P  |          |   u   |------->| M | -------->| k |------>|DB|
+|  E  |        |  o  |          |   e   |   pull | a |    pull  | e | INSERT|  |
+|  v  |        |  s  |          |       |        | p |          | t |       |  |
+|  e  |        |  t  |       |  +-------+        | p |          |   |   |   +--+
+|  n  |        |  g  |       |  GENSTAGE         | e |          |   |   |
+|  t  |        |  r  |       |  PRODUCER         | r |          |   |   |
+|  B  |        |  e  |       |                   |   |          |   |   |
+|  u  |        |  s  |       |                   |   |          |   |   |
+|  s  |        +-----+       |                   |   |          |   |   |
+|     |<-----------------------------------------|   |          +---+   |
+|     |                      |    fetch_event/1  |   |         CONSUMER |
+|     |                      |                   |   |                  |
++-----+                      |                   +---+                  |
+                             |                  CONSUMER                |
+                             |                  PRODUCER                |
+                             +------------------------------------------+
+```
+
 ## Documentation
 
 Module docs can be found at [https://hexdocs.pm/event_bus_postgres](https://hexdocs.pm/event_bus_postgres).
