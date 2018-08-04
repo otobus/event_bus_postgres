@@ -30,15 +30,26 @@ In your config.exs (or dev.exs, test.exs, prod.exs);
 
 ```elixir
 config :event_bus_postgres,
+  # Enable/disable PG consumer
   enabled: {:system, "EB_PG_ENABLED", "true"},
+
+  # If you want to disable auto delete set auto_delete_with_ttl to "false"
   auto_delete_with_ttl: {:system, "EB_PG_AUTO_DELETE_WITH_TTL", "true"},
+
+  # Default TTL for deletion, this value will be set when not given in Event struct
+  default_ttl_in_ms: {:system, "EB_PG_DEFAULT_TTL_IN_MS", "900000"},
+
+  # Execute delete in given period
+  deletion_period_in_ms: {:system, "EB_PG_DELETION_PERIOD_IN_MS", "600000"},
+
+  # GenStage config
   min_demand: {:system, "EB_PG_MIN_DEMAND", "75"}, # GenStage consumer
   max_demand: {:system, "EB_PG_MAX_DEMAND", "100"}, # GenStage consumer
-  pool_size: {:system, "EB_PG_POOL_SIZE", "1"}, # GenStage consumer
+  pool_size: {:system, "EB_PG_POOL_SIZE", "1"}, # GenStage consumer + DB Connection pool
   buffer_size: {:system, "EB_PG_BUFFER_SIZE", "200"}, # GenStage producer_consumer
-  topics: {:system, "EB_PG_TOPICS", ".*"},
-  default_ttl_in_ms: {:system, "EB_PG_DEFAULT_TTL_IN_MS", "900000"},
-  deletion_period_in_ms: {:system, "EB_PG_DELETION_PERIOD_IN_MS", "600000"}
+
+  # Topic subscriptions seperated by semicolons ';'
+  topics: {:system, "EB_PG_TOPICS", ".*"}
 
 # DB config
 config :event_bus_postgres, EventBus.Postgres.Repo,
