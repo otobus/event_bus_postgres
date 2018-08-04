@@ -5,7 +5,7 @@ defmodule EventBus.Postgres.EventMapper do
 
   use GenStage
   alias EventBus.Postgres
-  alias EventBus.Postgres.{Config, Queue, Model.Event}
+  alias EventBus.Postgres.{Config, Model.Event, Queue}
 
   def init(state) do
     {

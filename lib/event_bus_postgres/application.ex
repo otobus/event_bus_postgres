@@ -2,8 +2,9 @@ defmodule EventBus.Postgres.Application do
   @moduledoc false
 
   use Application
+
   alias EventBus.Postgres
-  alias EventBus.Postgres.{Config, Repo, Queue, EventMapper, Bucket}
+  alias EventBus.Postgres.{Bucket, Config, EventMapper, Queue, Repo}
   alias EventBus.Postgres.Supervisor.TTL, as: TTLSupervisor
 
   def start(_type, _args) do
@@ -34,7 +35,8 @@ defmodule EventBus.Postgres.Application do
   defp auto_deletion_workers do
     if Config.auto_delete_with_ttl?() do
       import Supervisor.Spec, warn: false
-      [ supervisor(TTLSupervisor, [], id: make_ref(), restart: :permanent) ]
+
+      [supervisor(TTLSupervisor, [], id: make_ref(), restart: :permanent)]
     else
       []
     end

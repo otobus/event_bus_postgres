@@ -14,6 +14,9 @@ defmodule EventBus.Postgres.DataCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.{Adapters.SQL.Sandbox, Changeset}
+  alias EventBus.Postgres.Repo
+
   using do
     quote do
       alias EventBus.Postgres.Repo
@@ -26,10 +29,10 @@ defmodule EventBus.Postgres.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(EventBus.Postgres.Repo)
+    :ok = Sandbox.checkout(Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(EventBus.Postgres.Repo, {:shared, self()})
+      Sandbox.mode(Repo, {:shared, self()})
     end
 
     :ok
@@ -44,7 +47,7 @@ defmodule EventBus.Postgres.DataCase do
 
   """
   def errors_on(changeset) do
-    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
+    Changeset.traverse_errors(changeset, fn {message, opts} ->
       Enum.reduce(opts, message, fn {key, value}, acc ->
         String.replace(acc, "%{#{key}}", to_string(value))
       end)

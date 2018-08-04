@@ -4,7 +4,7 @@ defmodule EventBus.Postgres.Bucket do
   """
 
   use GenStage
-  alias EventBus.Postgres.{Config, Store, EventMapper}
+  alias EventBus.Postgres.{Config, EventMapper, Store}
 
   def init(:ok) do
     {

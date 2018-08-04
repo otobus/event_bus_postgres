@@ -4,7 +4,8 @@ defmodule EventBus.Postgres.Store do
   """
 
   import Ecto.Query
-  alias EventBus.Postgres.{Repo, Model.Event}
+
+  alias EventBus.Postgres.{Model.Event, Repo}
 
   @pagination_vars %{page: 1, per_page: 20, since: 0}
   @pagination_vars_with_transaction_id Map.put(@pagination_vars, :transaction_id, nil)
