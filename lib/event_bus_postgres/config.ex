@@ -69,17 +69,29 @@ defmodule EventBus.Postgres.Config do
     |> to_int()
   end
 
-  defp get_env_var({:system, name, default}),
-    do: System.get_env(name) || default
+  defp get_env_var({:system, name, default}) do
+    System.get_env(name) || default
+  end
 
-  defp get_env_var(item), do: item
+  defp get_env_var(item) do
+    item
+  end
 
-  defp to_list(val) when is_list(val), do: val
-  defp to_list(val), do: String.split(val, ";")
+  defp to_list(val) when is_list(val) do
+    val
+  end
 
-  defp to_int(val \\ 0), do: String.to_integer("#{val}")
+  defp to_list(val) do
+    String.split(val, ";")
+  end
 
-  defp to_microseconds(val), do: val * 1_000
+  defp to_int(val \\ 0) do
+    String.to_integer("#{val}")
+  end
+
+  defp to_microseconds(val) do
+    val * 1_000
+  end
 
   defp to_bool(val) do
     case "#{val}" do

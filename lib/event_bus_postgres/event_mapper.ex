@@ -4,6 +4,7 @@ defmodule EventBus.Postgres.EventMapper do
   """
 
   use GenStage
+
   alias EventBus.Postgres
   alias EventBus.Postgres.{Config, Model.Event, Queue}
 
@@ -29,7 +30,7 @@ defmodule EventBus.Postgres.EventMapper do
     events =
       Enum.map(event_shadows, fn {topic, id} ->
         event = EventBus.fetch_event({topic, id})
-        EventBus.mark_as_completed({Postgres, topic, id})
+        EventBus.mark_as_completed({Postgres, {topic, id}})
         Event.from_eb_event(event)
       end)
 

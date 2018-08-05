@@ -4,6 +4,7 @@ defmodule EventBus.Postgres.Model.Event do
   """
 
   use Ecto.Schema
+
   alias EventBus.Postgres.{Config, Model.Event}
 
   @primary_key {:id, :binary_id, autogenerate: true}

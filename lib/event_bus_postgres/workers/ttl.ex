@@ -2,12 +2,15 @@ defmodule EventBus.Postgres.Worker.TTL do
   @moduledoc false
 
   use GenServer
+
   alias EventBus.Postgres.{Config, Store}
 
   ## Callbacks
 
   @doc false
-  def start_link, do: GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  def start_link do
+    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  end
 
   @doc false
   def init(_opts) do
@@ -22,6 +25,7 @@ defmodule EventBus.Postgres.Worker.TTL do
     {:noreply, state}
   end
 
-  defp delete_later,
-    do: Process.send_after(self(), :delete_expired, Config.deletion_period())
+  defp delete_later do
+    Process.send_after(self(), :delete_expired, Config.deletion_period())
+  end
 end
