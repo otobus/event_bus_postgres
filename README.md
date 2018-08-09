@@ -110,6 +110,10 @@ Module docs can be found at [https://hexdocs.pm/event_bus_postgres](https://hexd
 
 3. Make a pull request.
 
+### Contributors
+
+Special thanks to all [contributors](https://github.com/otobus/event_bus_postgres/graphs/contributors).
+
 ## Demo
 
 Let's create 100k rows of events in Postgres with 1 worker
