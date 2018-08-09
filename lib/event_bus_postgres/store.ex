@@ -80,7 +80,7 @@ defmodule EventBus.Postgres.Store do
   Find an event
   """
   def find(id) do
-    case Repo.get(id, Event) do
+    case Repo.get(Event, id) do
       nil -> nil
       event -> Event.to_eb_event(event)
     end
