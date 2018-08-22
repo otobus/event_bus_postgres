@@ -4,8 +4,7 @@ Listen and save `event_bus` events to Postgres.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `event_bus_postgres` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `event_bus_postgres` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
