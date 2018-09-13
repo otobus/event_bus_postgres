@@ -9,8 +9,8 @@ The package can be installed by adding `event_bus_postgres` to your list of depe
 ```elixir
 def deps do
   [
-    {:event_bus_postgres, "~> 0.3.1"},
-    {:event_bus, "~> 1.4.1"}
+    {:event_bus_postgres, "~> 0.4"},
+    {:event_bus, "~> 1.5"}
   ]
 end
 ```
@@ -49,14 +49,20 @@ config :event_bus_postgres,
   buffer_size: {:system, "EB_PG_BUFFER_SIZE", "200"}, # GenStage producer_consumer
 
   # Topic subscriptions seperated by semicolons ';'
-  topics: {:system, "EB_PG_TOPICS", ".*"}
+  topics: {:system, "EB_PG_TOPICS", ".*"},
 
-# DB config
+  # Set DB url and pool size in here if you use Elixir releases
+  db_url: {:system, "EB_PG_DATABASE_URL", nil},
+  db_pool_size: {:system, "EB_PG_DATABASE_POOL_SIZE", 1}
+
+# Regular ecto DB config
+config :event_bus_postgres, ecto_repos: [EventBus.Postgres.Repo]
+
 config :event_bus_postgres, EventBus.Postgres.Repo,
+  # ...,
+  # Set other configs depending on your DB needs
   adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("EB_PG_DATABASE_URL"),
-  pool_size: String.to_integer(System.get_env("EB_PG_POOL_SIZE") || "1"),
-  ssl: true
+  ssl: true # depending on your need
 ```
 
 ## How does it work?
@@ -118,14 +124,21 @@ Special thanks to all [contributors](https://github.com/otobus/event_bus_postgre
 Let's create 100k rows of events in Postgres with 1 worker
 
 ```shell
+# Export ENV vars for event_bus_postgres configurations
+
 export EB_PG_ENABLED=true;
 export EB_PG_MIN_DEMAND=75;
 export EB_PG_MAX_DEMAND=100;
-export EB_PG_POOL_SIZE=1; # 1 worker/consumer
+export EB_PG_POOL_SIZE=1; # 1 worker
 export EB_PG_BUFFER_SIZE=200;
 export EB_PG_TOPICS=".*";
 export EB_PG_DEFAULT_TTL="900000";
 export EB_PG_DELETION_PERIOD="600000";
+
+# Export ENV vars for Postgres db
+export EB_PG_DATABASE_URL=postgres://admin:123456@localhost:5432/event_bus_postgres_dev
+export EB_PG_DATABASE_POOL_SIZE=1 # 1 DB connection
+
 iex -S mix;
 ```
 
@@ -156,7 +169,7 @@ defmodule FakeSource do
       Enum.each(1..100_000, fn _ ->
         params = %{id: UUID.uuid4(), topic: topic, transaction_id: transaction_id, ttl: ttl, source: source, error_topic: error_topic}
         EventSource.notify(params) do
-          "this is a fake event"
+          "this is a fake event with id #{params[:id]}"
         end
       end)
     end)
@@ -169,7 +182,7 @@ end
 
 ## License
 
-MIT
+MIT, [LCR](LCR_LICENSE.md)
 
 Copyright (c) 2018 Mustafa Turan
 

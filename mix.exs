@@ -4,7 +4,7 @@ defmodule EventBus.Postgres.Mixfile do
   def project do
     [
       app: :event_bus_postgres,
-      version: "0.3.1",
+      version: "0.4.0",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -26,19 +26,25 @@ defmodule EventBus.Postgres.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:event_bus, ">= 1.4.1"},
-      {:ecto, "~> 2.2"},
+      {:event_bus, ">= 1.5.0"},
+      {:ecto, ">= 2.2.10"},
       {:postgrex, ">= 0.0.0"},
-      {:gen_stage, "~> 0.14.0"},
+      {:gen_stage, "~> 0.14"},
       {:uuid, "~> 1.1", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:credo, "~> 0.10.0", only: :dev}
+      {:credo, "~> 0.10.0", only: :dev},
+      {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], build: false}
     ]
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]
+  defp elixirc_paths(:test) do
+    ["lib", "test/support"]
+  end
+
+  defp elixirc_paths(_) do
+    ["lib"]
+  end
 
   # Aliases are shortcuts or tasks specific to the current project.
   # For example, to create, migrate and run the seeds file at once:
@@ -63,9 +69,9 @@ defmodule EventBus.Postgres.Mixfile do
   defp package do
     [
       name: :event_bus_postgres,
-      files: ["lib", "mix.exs", "priv", "README.md"],
+      files: ["lib", "mix.exs", "priv", "README.md", "LCR_LICENSE.md"],
       maintainers: ["Mustafa Turan"],
-      licenses: ["MIT"],
+      licenses: ["MIT", "LCR"],
       links: %{"GitHub" => "https://github.com/mustafaturan/event_bus_postgres"}
     ]
   end
