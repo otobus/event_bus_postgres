@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added db_url and db_pool_size configurations to support of releases
 - Fixed dialyxir warnings
 - Added LCR license
+- Added Code of Conduct
 
 ## Previous versions
 - Opensourced as a sample addon using GenStage

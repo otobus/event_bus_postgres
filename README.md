@@ -180,6 +180,10 @@ end
 {time_spent, :ok} = FakeSource.generate_events()
 ```
 
+## Code of Conduct
+
+Please refer to [code of conduct](CODE_OF_CONDUCT.md) file.
+
 ## License
 
 MIT, [LCR](LCR_LICENSE.md)
