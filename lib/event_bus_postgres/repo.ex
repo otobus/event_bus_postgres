@@ -3,8 +3,39 @@ defmodule EventBus.Postgres.Repo do
 
   use Ecto.Repo, otp_app: :event_bus_postgres
 
+  alias EventBus.Postgres.Config
+
   @doc false
   def init(_, opts) do
-    {:ok, Keyword.put(opts, :url, System.get_env("EB_PG_DATABASE_URL"))}
+    opts =
+      opts
+      |> merge_db_url()
+      |> merge_pool_size()
+
+    {:ok, opts}
+  end
+
+  defp merge_db_url(opts) do
+    case Keyword.has_key?(opts, :url) do
+      false -> merge_val(opts, :url, Config.db_url())
+
+      true -> opts
+    end
+  end
+
+  defp merge_pool_size(opts) do
+    case Keyword.has_key?(opts, :pool_size) do
+      false -> merge_val(opts, :pool_size, Config.db_pool_size())
+
+      true -> opts
+    end
+  end
+
+  defp merge_val(opts, _key, nil) do
+    opts
+  end
+
+  defp merge_val(opts, key, val) do
+    Keyword.put(opts, key, val)
   end
 end

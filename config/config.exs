@@ -11,6 +11,8 @@ config :event_bus_postgres,
   buffer_size: {:system, "EB_PG_BUFFER_SIZE", "200"},
   topics: {:system, "EB_PG_TOPICS", ".*"},
   default_ttl_in_ms: {:system, "EB_PG_DEFAULT_TTL_IN_MS", "900000"},
-  deletion_period_in_ms: {:system, "EB_PG_DELETION_PERIOD_IN_MS", "600000"}
+  deletion_period_in_ms: {:system, "EB_PG_DELETION_PERIOD_IN_MS", "600000"},
+  db_url: {:system, "EB_PG_DATABASE_URL", nil},
+  db_pool_size: {:system, "EB_PG_DATABASE_POOL_SIZE", 1}
 
 import_config "#{Mix.env()}.exs"

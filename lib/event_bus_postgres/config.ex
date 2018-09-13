@@ -5,6 +5,30 @@ defmodule EventBus.Postgres.Config do
 
   @app :event_bus_postgres
 
+  ##############################################################################
+  # POSTGRES DB CONFIG START
+  ##############################################################################
+
+  @spec db_url() :: String.t() | nil
+  def db_url do
+    @app
+    |> Application.get_env(:db_url)
+    |> get_env_var()
+  end
+
+  @spec db_pool_size() :: integer() | nil
+  def db_pool_size do
+    @app
+    |> Application.get_env(:db_pool_size)
+    |> get_env_var()
+    |> to_int()
+  end
+
+  ##############################################################################
+  # POSTGRES DB CONFIG END
+  ##############################################################################
+
+  @spec enabled?() :: boolean()
   def enabled? do
     @app
     |> Application.get_env(:enabled)
@@ -12,6 +36,7 @@ defmodule EventBus.Postgres.Config do
     |> to_bool()
   end
 
+  @spec auto_delete_with_ttl?() :: boolean()
   def auto_delete_with_ttl? do
     @app
     |> Application.get_env(:auto_delete_with_ttl, true)
@@ -19,52 +44,59 @@ defmodule EventBus.Postgres.Config do
     |> to_bool()
   end
 
+  @spec pool_size() :: integer()
   def pool_size do
     @app
-    |> Application.get_env(:pool_size)
+    |> Application.get_env(:pool_size, 1)
     |> get_env_var()
     |> to_int()
   end
 
+  @spec buffer_size() :: integer()
   def buffer_size do
     @app
-    |> Application.get_env(:buffer_size)
+    |> Application.get_env(:buffer_size, 200)
     |> get_env_var()
     |> to_int()
   end
 
+  @spec min_demand() :: integer()
   def min_demand do
     @app
-    |> Application.get_env(:min_demand)
+    |> Application.get_env(:min_demand, 75)
     |> get_env_var()
     |> to_int()
   end
 
+  @spec max_demand() :: integer()
   def max_demand do
     @app
-    |> Application.get_env(:max_demand)
+    |> Application.get_env(:max_demand, 100)
     |> get_env_var()
     |> to_int()
   end
 
+  @spec topics() :: list(String.t())
   def topics do
     @app
-    |> Application.get_env(:topics)
+    |> Application.get_env(:topics, "")
     |> get_env_var()
     |> to_list()
   end
 
+  @spec default_ttl() :: integer()
   def default_ttl do
     @app
-    |> Application.get_env(:default_ttl_in_ms)
+    |> Application.get_env(:default_ttl_in_ms, 900_000)
     |> get_env_var()
     |> to_int()
     |> to_microseconds()
   end
 
+  @spec deletion_period() :: integer()
   def deletion_period do
     @app
-    |> Application.get_env(:deletion_period_in_ms)
+    |> Application.get_env(:deletion_period_in_ms, default_ttl())
     |> get_env_var()
     |> to_int()
   end
@@ -85,8 +117,12 @@ defmodule EventBus.Postgres.Config do
     String.split(val, ";")
   end
 
-  defp to_int(val \\ 0) do
-    String.to_integer("#{val}")
+  defp to_int(val) when is_integer(val) do
+    val
+  end
+
+  defp to_int(val) do
+    String.to_integer(val)
   end
 
   defp to_microseconds(val) do
@@ -99,9 +135,6 @@ defmodule EventBus.Postgres.Config do
         true
 
       "true" ->
-        true
-
-      true ->
         true
 
       _ ->

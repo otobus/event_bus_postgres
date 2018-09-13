@@ -108,7 +108,7 @@ defmodule EventBus.Postgres.Store do
   Delete expired events
   """
   def delete_expired do
-    now = System.os_time(:micro_seconds)
+    now = System.os_time(:microsecond)
 
     query =
       from(

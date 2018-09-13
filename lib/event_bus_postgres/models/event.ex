@@ -27,7 +27,7 @@ defmodule EventBus.Postgres.Model.Event do
       topic: "#{event.topic}",
       data: :erlang.term_to_binary(event.data),
       initialized_at: event.initialized_at,
-      occurred_at: event.occurred_at || System.os_time(:micro_seconds),
+      occurred_at: event.occurred_at || now(),
       source: event.source,
       ttl: event.ttl || Config.default_ttl()
     }
@@ -45,5 +45,13 @@ defmodule EventBus.Postgres.Model.Event do
       source: event.source,
       ttl: event.ttl
     }
+  end
+
+  defp now do
+    System.os_time(time_unit())
+  end
+
+  defp time_unit do
+    Application.get_env(:event_bus, :time_unit, :microsecond)
   end
 end

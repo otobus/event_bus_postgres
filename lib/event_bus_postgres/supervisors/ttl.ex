@@ -11,6 +11,7 @@ defmodule EventBus.Postgres.Supervisor.TTL do
   end
 
   @doc false
+  @spec init(list()) :: no_return()
   def init([]) do
     children = [
       worker(TTLWorker, [], id: make_ref(), restart: :permanent)
