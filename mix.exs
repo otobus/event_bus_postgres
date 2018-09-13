@@ -69,7 +69,14 @@ defmodule EventBus.Postgres.Mixfile do
   defp package do
     [
       name: :event_bus_postgres,
-      files: ["lib", "mix.exs", "priv", "README.md", "LCR_LICENSE.md"],
+      files: [
+        "lib",
+        "mix.exs",
+        "priv",
+        "README.md",
+        "MIT_LICENSE.md",
+        "LCR_LICENSE.md"
+      ],
       maintainers: ["Mustafa Turan"],
       licenses: ["MIT", "LCR"],
       links: %{"GitHub" => "https://github.com/mustafaturan/event_bus_postgres"}

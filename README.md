@@ -186,7 +186,7 @@ Please refer to [code of conduct](CODE_OF_CONDUCT.md) file.
 
 ## License
 
-MIT, [LCR](LCR_LICENSE.md)
+[MIT](MIT_LICENSE.md), [LCR](LCR_LICENSE.md)
 
 Copyright (c) 2018 Mustafa Turan
 
