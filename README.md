@@ -9,7 +9,7 @@ The package can be installed by adding `event_bus_postgres` to your list of depe
 ```elixir
 def deps do
   [
-    {:event_bus_postgres, "~> 0.4"},
+    {:event_bus_postgres, "~> 0.4.1"},
     {:event_bus, "~> 1.5"}
   ]
 end

@@ -4,7 +4,7 @@ defmodule EventBus.Postgres.Mixfile do
   def project do
     [
       app: :event_bus_postgres,
-      version: "0.4.0",
+      version: "0.4.1",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
