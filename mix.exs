@@ -33,7 +33,7 @@ defmodule EventBus.Postgres.Mixfile do
       {:uuid, "~> 1.1", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:credo, "~> 1.4.0", only: :dev},
-      {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], build: false}
+      {:dialyxir, "~> 1.1.0", only: [:dev], build: false}
     ]
   end
 
