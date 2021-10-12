@@ -113,7 +113,7 @@ defmodule EventBus.Postgres.Store do
     query =
       from(
         e in Event,
-        where: fragment("? + ? >= ?", e.occurred_at, e.ttl, ^now)
+        where: fragment("? + ? <= ?", e.occurred_at, e.ttl, ^now)
       )
 
     Repo.delete_all(query)
