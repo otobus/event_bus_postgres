@@ -29,7 +29,7 @@ defmodule EventBus.Postgres.Mixfile do
       {:event_bus, ">= 1.6.0"},
       {:ecto, ">= 2.2.10"},
       {:postgrex, ">= 0.0.0"},
-      {:gen_stage, "~> 0.14"},
+      {:gen_stage, "~> 1.0"},
       {:uuid, "~> 1.1", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:credo, "~> 1.4.0", only: :dev},
