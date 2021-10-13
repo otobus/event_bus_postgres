@@ -27,7 +27,8 @@ defmodule EventBus.Postgres.Mixfile do
   defp deps do
     [
       {:event_bus, ">= 1.6.0"},
-      {:ecto, ">= 2.2.10"},
+      {:ecto, "~> 3.0"},
+      {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:gen_stage, "~> 0.14"},
       {:uuid, "~> 1.1", only: [:dev, :test]},

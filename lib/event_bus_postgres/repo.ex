@@ -1,7 +1,9 @@
 defmodule EventBus.Postgres.Repo do
   @moduledoc false
 
-  use Ecto.Repo, otp_app: :event_bus_postgres
+  use Ecto.Repo,
+    otp_app: :event_bus_postgres,
+    adapter: Ecto.Adapters.Postgres
 
   alias EventBus.Postgres.Config
 
