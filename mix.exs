@@ -30,7 +30,7 @@ defmodule EventBus.Postgres.Mixfile do
       {:ecto, "~> 3.0"},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
-      {:gen_stage, "~> 0.14"},
+      {:gen_stage, "~> 1.0"},
       {:uuid, "~> 1.1", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:credo, "~> 1.4.0", only: :dev},
